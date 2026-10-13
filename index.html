@@ -90,28 +90,32 @@ textarea{-webkit-user-select:text; user-select:text}
 .intro ul{list-style:none; padding:16px 18px; margin:0 auto 22px; max-width:330px; text-align:left; display:grid; gap:8px; font-size:15.5px;
   background:#fff; border-radius:18px; box-shadow:var(--shadow); transform:rotate(.8deg)}
 
-/* ===================== ROUND 1 · SWIPE ===================== */
-.deck{position:relative; flex:1; min-height:0; margin:4px 6px 14px}
-.card{position:absolute; inset:0; background:#fff; border-radius:24px; padding:12px 12px 16px; box-shadow:var(--shadow);
-  display:flex; flex-direction:column; touch-action:none; will-change:transform}
-.card.back{transform:scale(.94) translateY(14px); opacity:.85}
-.card.top{animation:promote .22s ease-out}
-@keyframes promote{from{transform:scale(.94) translateY(14px)}}
-.card .ph{flex:1; min-height:0; border-radius:16px; display:grid; place-items:center; font-size:min(26vw,108px);
-  background:radial-gradient(circle at 50% 55%,rgba(255,255,255,.8) 0 26%,transparent 27%),repeating-conic-gradient(from 0deg at 50% 55%,#FBD8DE 0 10deg,#FCE6E9 10deg 20deg)}
-.card h3{font-family:var(--serif); font-size:24px; line-height:1.1; margin:12px 4px 2px; color:var(--burgundy)}
-.card p{margin:0 4px; color:var(--muted); font-size:14.5px}
-.stamp{position:absolute; top:24px; padding:4px 12px; border:3px solid; border-radius:10px; font-weight:700; font-size:22px; letter-spacing:.06em; opacity:0; z-index:2; background:rgba(255,255,255,.85)}
-.st-yes{left:22px; color:var(--cherry); transform:rotate(-14deg)}
-.st-no{right:22px; color:#6b5b5e; transform:rotate(14deg)}
-.st-sup{left:50%; top:auto; bottom:38%; transform:translateX(-50%) rotate(-6deg); color:#d48a00}
-.swipe-btns{display:flex; justify-content:center; align-items:center; gap:18px}
-.rb{width:62px; height:62px; border-radius:50%; background:#fff; box-shadow:0 4px 0 rgba(122,38,54,.12),0 10px 20px -12px rgba(122,38,54,.5); font-size:26px; display:grid; place-items:center; transition:transform .12s}
-.rb:active{transform:scale(.9)}
-.rb.big{width:74px; height:74px; font-size:32px; background:var(--cherry); color:#fff; box-shadow:0 4px 0 var(--burgundy)}
-.rb.sm{width:44px; height:44px; font-size:18px}
-.rb:disabled{opacity:.35}
-.count{text-align:center; font-size:13px; color:var(--muted); margin-top:8px}
+/* ===================== ROUND 1 · THIS OR THAT ===================== */
+.meme{text-align:center; font-style:italic; color:var(--muted); font-size:14px; margin:0 0 10px; min-height:20px}
+.tot{flex:1; min-height:0; display:flex; flex-direction:column}
+.choice{position:relative; flex:1; min-height:0; width:100%; background:#fff; border-radius:22px; border:2px solid transparent; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:12px 16px; transition:transform .25s, opacity .25s, border-color .2s}
+.choice:first-child{transform:rotate(-.7deg)}
+.choice:last-child{transform:rotate(.7deg)}
+.choice .e{font-size:min(15vw,62px); line-height:1.1}
+.choice b{font-family:var(--serif); font-weight:600; font-size:22px; line-height:1.1; color:var(--burgundy); margin:6px 0 2px}
+.choice small{color:var(--muted); font-size:14px}
+.choice:active{transform:scale(.97)}
+.choice.picked{border-color:var(--cherry); transform:scale(1.03); background:#FFF1F3}
+.choice.lost{opacity:.35; transform:scale(.95)}
+.or{align-self:center; position:relative; z-index:2; margin:-16px 0; width:46px; height:46px; border-radius:50%; background:var(--cherry); color:#fff;
+  display:grid; place-items:center; font-family:var(--serif); font-style:italic; font-size:18px; box-shadow:0 4px 0 var(--burgundy)}
+.tot.enter .choice{animation:in .35s cubic-bezier(.2,.8,.2,1) both}
+.tot.enter .choice:last-child{animation-delay:.06s}
+.tot-foot{display:flex; gap:8px; justify-content:center; margin-top:14px}
+.pill{border-radius:999px; padding:10px 14px; min-height:44px; font-size:14px; font-weight:600; background:#fff; border:1.5px solid var(--line); color:var(--burgundy)}
+.pill.ghost{background:transparent}
+.pill:disabled{opacity:.35}
+.count{display:flex; justify-content:center; align-items:center; gap:10px; font-size:13px; color:var(--muted); margin-top:6px}
+.count button{color:var(--muted); font-size:13px; padding:8px; min-height:36px}
+.count button:disabled{opacity:.3}
+.cap.back{animation:plop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes plop{from{transform:translateY(-60px)}}
 
 /* ===================== ROUND 2 · CATCH ===================== */
 .stage{position:relative; flex:1; min-height:0; border-radius:24px; overflow:hidden; touch-action:none; box-shadow:var(--shadow);
@@ -270,7 +274,7 @@ textarea.wish:focus{outline:none; border-color:var(--cherry)}
   <!-- WELCOME -->
   <section class="screen active" id="s-welcome">
     <div class="scroll" style="flex:1; display:flex; flex-direction:column">
-      <span class="case-tag">✦ case file no. 0001 ✦</span>
+      <span class="case-tag">✦ case file no. A-1810 ✦</span>
       <h1 class="hero">the girlhood <em>archives</em> 🎀</h1>
       <p class="sub">an extremely unserious investigation into your very serious princess preferences</p>
       <article class="polaroid wcard">
@@ -302,16 +306,15 @@ textarea.wish:focus{outline:none; border-color:var(--cherry)}
     <button class="btn btn-primary" id="introGo"></button>
   </section>
 
-  <!-- ROUND 1: SWIPE -->
-  <section class="screen" id="s-swipe">
-    <div class="deck" id="deck"></div>
-    <div class="swipe-btns">
-      <button class="rb sm" id="undoBtn" aria-label="Undo last swipe">↩</button>
-      <button class="rb" id="noBtn" aria-label="Nope">✕</button>
-      <button class="rb big" id="yesBtn" aria-label="Yes please">♥</button>
-      <button class="rb" id="supBtn" aria-label="Obsessed">🤩</button>
+  <!-- ROUND 1: THIS OR THAT -->
+  <section class="screen" id="s-tot">
+    <p class="meme" id="totMeme"></p>
+    <div class="tot" id="tot"></div>
+    <div class="tot-foot">
+      <button class="pill" id="libraBtn">♎ both</button>
+      <button class="pill ghost" id="neitherBtn">neither 🙅‍♀️</button>
     </div>
-    <div class="count" id="swipeCount"></div>
+    <div class="count"><button id="totBack">↩ back</button><span id="totCount"></span></div>
   </section>
 
   <!-- ROUND 2: CATCH -->
@@ -346,14 +349,14 @@ textarea.wish:focus{outline:none; border-color:var(--cherry)}
       </div>
     </div>
     <div class="claw-ui">
-      <div class="left"><b id="grabsLeft">7</b>grabs left</div>
+      <div class="left"><b id="grabsLeft">10</b>🪙 coins · <span id="prizeCount">0/7</span> prizes</div>
       <button class="btn btn-primary" id="dropBtn">DROP 🎀</button>
     </div>
   </section>
 
   <!-- ROUND 4: SHOP -->
   <section class="screen" id="s-shop">
-    <div class="wallet"><b id="hearts">300💗</b><div style="flex:1"><small>build your dream birthday</small><span class="tbar"><i id="wfill"></i></span></div></div>
+    <div class="wallet"><b id="hearts">10 🎟️</b><div style="flex:1"><small>build your dream birthday</small><span class="tbar"><i id="wfill"></i></span></div></div>
     <div class="scroll" style="flex:1"><div class="shop" id="shop"></div></div>
     <div class="dock"><button class="btn btn-primary" id="checkoutBtn" disabled>this is my dream day ✨</button></div>
   </section>
@@ -402,7 +405,7 @@ textarea.wish:focus{outline:none; border-color:var(--cherry)}
         <p class="rdesc" id="rDesc"></p>
         <ul class="traits" id="rTraits"></ul>
         <p class="compl" id="rCompl"></p>
-        <div class="foot"><span>the girlhood archives ✦ <span id="rDate"></span></span><span class="stampx">case closed</span></div>
+        <div class="foot"><span>the girlhood archives ✦ ch. 22</span><span class="stampx">case closed</span></div>
       </article>
       <p class="outro" id="outro"></p>
       <p class="caption">screenshot your card & keep it forever 📸</p>
@@ -428,39 +431,57 @@ textarea.wish:focus{outline:none; border-color:var(--cherry)}
    ⚙️ CONFIG
    ========================================================= */
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xppqjvny";
-const STORAGE_KEY = "girlhood-arcade-v1";
-const BUDGET = 300;           // hearts in the dream-day shop
+const STORAGE_KEY = "girlhood-arcade-v2";
+const BUDGET = 10;            // tickets in the dream-day shop (10 🎟️ ≈ your RM300)
+const COINS = 10;             // claw coins
 const CATCH_SECONDS = 25;
 
 /* =========================================================
    GAME DATA
    ========================================================= */
-// Round 1 — swipe cards. s = score added on "yes" (×1.7 on "obsessed")
-const SWIPES = [
-  {id:"body",     e:"🫧", t:"Full-body massage, lights low", d:"an hour of not existing. bliss.", s:{massage:3, body_massage:4}},
-  {id:"foot",     e:"🦶", t:"Foot reflexology", d:"feet up, shoulders down, phone face-down", s:{massage:2, foot_massage:4}},
-  {id:"headspa",  e:"🧴", t:"Hair wash & head spa", d:"the salon scalp massage is spiritual", s:{massage:1, beauty_spa:4}},
-  {id:"mani",     e:"💅", t:"A fresh manicure", d:"glossy, neat, main-character hands", s:{nails:3, manicure:3}},
-  {id:"pedi",     e:"🌸", t:"Pedicure too", d:"cute toes for sandal season (every season)", s:{nails:2, pedicure:4}},
-  {id:"gel",      e:"🎀", t:"Gel nails with charms & bows", d:"if it doesn't sparkle, why bother", s:{nails:2, nail_art:4}},
-  {id:"pottery",  e:"🏺", t:"Pottery date for two", d:"leaving with matching wonky mugs", s:{creative_activity:4}},
-  {id:"batik",    e:"🎨", t:"Batik or paint & sip", d:"art, snacks, zero talent required", s:{creative_activity:4}},
-  {id:"photo",    e:"📸", t:"Photobooth strips together", d:"4 poses, 1 chaotic memory", s:{creative_activity:1, sentimental_gifts:1}},
-  {id:"foodhop",  e:"🥟", t:"A food-hopping adventure", d:"minimum 4 stops. pace yourself? no.", s:{food_exploration:4}},
-  {id:"fancy",    e:"🥂", t:"Dress-up fancy dinner", d:"cloth napkins & main-character lighting", s:{food_exploration:2, fashion_gifts:1}},
-  {id:"shopping", e:"🛍️", t:"A little shopping spree", d:"\"just looking\" (we both know)", s:{shopping:4}},
-  {id:"cafe",     e:"☕", t:"Cozy café, zero plans", d:"a good drink and long talks", s:{quiet_time:4}},
-  {id:"mystery",  e:"🤫", t:"A full mystery plan", d:"\"dress cute, I have a plan.\" no hints.", s:{surprises:3}},
-  {id:"public",   e:"📣", t:"The whole restaurant sings for you", d:"birthday spotlight moment", s:{surprises:1}}
+// Round 1 — this or that. 11 pairs (22 options). act = budget activity the option belongs to.
+const PAIRS = [
+  {id:"pamper", m:"the ultimate girl dilemma",
+    a:{id:"spa", e:"💆‍♀️", t:"Spa day", d:"oils, warm towels, total silence", act:["massage"], s:{massage:4}},
+    b:{id:"nailday", e:"💅", t:"Nail day", d:"fresh set = fresh personality", act:["nails"], s:{nails:4}}},
+  {id:"massage", m:"POV: the therapist asks what you want",
+    a:{id:"body", e:"🫧", t:"Full-body massage", d:"60 minutes of not existing", act:["massage"], s:{massage:1, body_massage:4}},
+    b:{id:"foot", e:"🦶", t:"Foot reflexology", d:"feet up, phone face-down", act:["massage"], s:{massage:1, foot_massage:4}}},
+  {id:"nailstyle", m:"your nails, your lore",
+    a:{id:"mani", e:"🤍", t:"Clean glossy manicure", d:"quietly expensive-looking", act:["nails"], s:{nails:1, manicure:4}},
+    b:{id:"gel", e:"🎀", t:"Gel with charms & bows", d:"if it doesn't sparkle, why bother", act:["nails"], s:{nails:1, manicure:1, nail_art:4}}},
+  {id:"addon", m:"add-on menu. choose wisely.",
+    a:{id:"pedi", e:"🌸", t:"Pedicure + foot soak", d:"cute toes, sandal season forever", act:["nails"], s:{nails:1, pedicure:4}},
+    b:{id:"headspa", e:"🧴", t:"Hair wash & head spa", d:"the scalp massage is spiritual", act:["massage"], s:{massage:1, beauty_spa:4}}},
+  {id:"vs", m:"be honest. the council is watching 👀",
+    a:{id:"pampered", e:"🛁", t:"Getting pampered", d:"someone else does all the work", act:["massage","nails"], s:{massage:2, nails:2}},
+    b:{id:"create", e:"🎨", t:"Making something together", d:"a craft date with a souvenir", act:["creative_activity"], s:{creative_activity:4}}},
+  {id:"craft", m:"main character in a slow-life montage",
+    a:{id:"pottery", e:"🏺", t:"Pottery date", d:"matching wonky mugs", act:["creative_activity"], s:{creative_activity:1}},
+    b:{id:"batik", e:"🖌️", t:"Batik or paint & sip", d:"art, snacks, zero talent required", act:["creative_activity"], s:{creative_activity:1}}},
+  {id:"afternoon", m:"girl math: which one is technically free?",
+    a:{id:"foodhop", e:"🥟", t:"Food-hopping adventure", d:"4 stops minimum. pace yourself? no.", act:["food_exploration"], s:{food_exploration:4}},
+    b:{id:"shopping", e:"🛍️", t:"A little shopping spree", d:"\"just looking\" (we both know)", act:["shopping"], s:{shopping:9}}},
+  {id:"battery", m:"social battery check 🔋",
+    a:{id:"cafe", e:"☕", t:"Cozy café, zero plans", d:"a good drink and long talks", act:["quiet_time"], s:{quiet_time:7}},
+    b:{id:"photo", e:"📸", t:"Photobooth & arcade run", d:"chaotic poses, cheap plushie wins", act:["creative_activity"], s:{creative_activity:2, sentimental_gifts:1}}},
+  {id:"dinner", m:"it's giving… which era?",
+    a:{id:"fancy", e:"🥂", t:"Dress-up fancy dinner", d:"cloth napkins, main-character lighting", act:["food_exploration"], s:{food_exploration:3, fashion_gifts:1}},
+    b:{id:"comfy", e:"🍜", t:"Comfy fave-food date", d:"sweatpants energy, elite flavours", act:["food_exploration"], s:{food_exploration:3, quiet_time:2}}},
+  {id:"plan", m:"someone says \"dress cute, I have a plan\"",
+    a:{id:"mystery", e:"🤫", t:"Say less. Surprise me.", d:"no hints, i love not knowing", s:{surprises:3}},
+    b:{id:"knowplan", e:"🗺️", t:"Okay but… what's the plan?", d:"i like knowing the rough itinerary", s:{surprises:1}}},
+  {id:"moment", m:"the spotlight question",
+    a:{id:"private", e:"🕯️", t:"A sweet private moment", d:"just us, no audience", act:["quiet_time"], s:{quiet_time:3}},
+    b:{id:"public", e:"📣", t:"The whole restaurant sings", d:"spotlight on, main character mode", s:{surprises:1}}}
 ];
-// which swipe cards belong to which budget activity (for explicit "no")
-const ACT_CARDS = {massage:["body","foot","headspa"], nails:["mani","pedi","gel"], creative_activity:["pottery","batik"], food_exploration:["foodhop","fancy"], shopping:["shopping"], quiet_time:["cafe"]};
+const LIBRA_PASSES = 2;
 
 // Round 2 — catch game
-const FOODS = {cmuslim:["🍜","Chinese Muslim noodles"], dimsum:["🥟","Dim sum"], jpkr:["🍣","Japanese / Korean"], western:["🍝","Café / Western"], local:["🍛","Local (nasi lemak, mamak)"]};
-const DESSERTS = {bingsu:["🍧","Bingsu / ais kacang"], cake:["🍰","Pretty café cake"], matcha:["🍵","Matcha anything"], choc:["🍫","Chocolate overload"], fruit:["🍓","Fruity (strawberry, mango sago)"]};
+const FOODS = {cmuslim:["🍜","Chinese Muslim noodles"], sarawak:["🍲","Kolo mee / laksa Sarawak"], dimsum:["🥟","Dim sum"], jpkr:["🍣","Japanese / Korean"], western:["🍝","Café / Western"], local:["🍛","Nasi lemak / mamak"]};
+const DESSERTS = {bingsu:["🍧","Bingsu / ais kacang"], cake:["🍰","Pretty café cake"], lapis:["🎂","Kek lapis"], matcha:["🍵","Matcha anything"], choc:["🍫","Chocolate overload"], fruit:["🍓","Fruity (strawberry, mango sago)"]};
 const ICKS = ["📧","⏰","🧾","📚"];
-const ICK_LINES = ["ew, work emails 📧","no alarms on birthdays ⏰","bills?? not today 🧾","deadlines can wait 📚"];
+const ICK_LINES = ["work emails?? in this economy 📧","alarm on a day off = the ick ⏰","bills said hi. we said bye 🧾","deadlines can wait. delulu is the solulu 📚"];
 
 // Round 3 — claw prizes (one category per grab, 7 grabs)
 const CLAW = [
@@ -474,27 +495,27 @@ const CLAW = [
 ];
 const CAP_COLORS = ["#EFA3B1","#F7B267","#9AD0C2","#C3B1E1","#F28B95","#FFD27A","#A7C7E7"];
 
-// Round 4 — shop (hearts priced roughly like KL ringgit)
+// Round 4 — shop. Ticket prices are scaled from real KL prices (1 🎟️ ≈ RM30), but never shown as money.
 const SHOP = [
-  {id:"body",     e:"💆‍♀️", t:"Full-body massage", p:120, act:"massage", s:{body_massage:4}},
-  {id:"foot",     e:"🦶", t:"Foot reflexology", p:60, act:"massage", s:{foot_massage:4}},
-  {id:"headspa",  e:"🧴", t:"Head spa & hair wash", p:80, act:"massage", s:{beauty_spa:4}},
-  {id:"mani",     e:"💅", t:"Manicure", p:60, act:"nails", s:{manicure:4}},
-  {id:"manipedi", e:"🌸", t:"Mani + pedi", p:110, act:"nails", s:{manicure:3, pedicure:4}},
-  {id:"gel",      e:"🎀", t:"Gel nail art", p:100, act:"nails", s:{nail_art:4, manicure:2}},
-  {id:"pottery",  e:"🏺", t:"Pottery class for 2", p:130, act:"creative_activity"},
-  {id:"batik",    e:"🎨", t:"Batik / paint & sip", p:90, act:"creative_activity"},
-  {id:"photo",    e:"📸", t:"Photobooth + café", p:40, act:"creative_activity"},
-  {id:"dinner",   e:"🥂", t:"Fancy dinner", p:150, act:"food_exploration"},
-  {id:"food",     e:"🥢", t:"Fave-food date", p:60, act:"food_exploration"},
-  {id:"dessert",  e:"🍧", t:"Dessert run", p:25, act:"food_exploration"},
-  {id:"shop",     e:"🛍️", t:"Shopping money", p:100, act:"shopping"},
-  {id:"picnic",   e:"🧺", t:"Cozy park picnic", p:40, act:"quiet_time"},
-  {id:"gift",     e:"🎁", t:"A birthday gift", p:80, act:"gift"}
+  {id:"body",     e:"💆‍♀️", t:"Full-body massage", p:4, act:"massage", s:{body_massage:4}},
+  {id:"foot",     e:"🦶", t:"Foot reflexology", p:2, act:"massage", s:{foot_massage:4}},
+  {id:"headspa",  e:"🧴", t:"Head spa & hair wash", p:3, act:"massage", s:{beauty_spa:4}},
+  {id:"mani",     e:"💅", t:"Manicure", p:2, act:"nails", s:{manicure:4}},
+  {id:"manipedi", e:"🌸", t:"Mani + pedi", p:4, act:"nails", s:{manicure:3, pedicure:4}},
+  {id:"gel",      e:"🎀", t:"Gel nail art", p:3, act:"nails", s:{nail_art:4, manicure:2}},
+  {id:"pottery",  e:"🏺", t:"Pottery class for 2", p:4, act:"creative_activity"},
+  {id:"batik",    e:"🖌️", t:"Batik / paint & sip", p:3, act:"creative_activity"},
+  {id:"photo",    e:"📸", t:"Photobooth + café", p:1, act:"creative_activity"},
+  {id:"dinner",   e:"🥂", t:"Fancy dinner", p:5, act:"food_exploration"},
+  {id:"food",     e:"🥢", t:"Fave-food date", p:2, act:"food_exploration"},
+  {id:"dessert",  e:"🍧", t:"Dessert run", p:1, act:"food_exploration"},
+  {id:"shop",     e:"🛍️", t:"Shopping money", p:3, act:"shopping"},
+  {id:"picnic",   e:"🧺", t:"Cozy park picnic", p:1, act:"quiet_time"},
+  {id:"gift",     e:"🎁", t:"A birthday gift", p:3, act:"gift"}
 ];
 
 const SPECIAL = [
-  {id:"time",     e:"🫂", t:"Undivided attention", d:"phones away, actually present", s:{quiet_time:2}},
+  {id:"time",     e:"🫂", t:"Undivided attention", d:"phones away, actually present", s:{quiet_time:3}},
   {id:"surprise", e:"✉️", t:"Little thoughtful surprises", d:"proof you were thinking of me", s:{surprises:2, sentimental_gifts:1}},
   {id:"gifts",    e:"🎁", t:"A gift that's so me", d:"it shows you actually listen", s:{fashion_gifts:1, cute_gifts:1, beauty_gifts:1}},
   {id:"pampered", e:"🛁", t:"Being taken care of", d:"for once, i don't plan anything", s:{massage:1, nails:1}},
@@ -511,15 +532,16 @@ const GIFTS = {
 };
 const SCORE_KEYS = ["massage","body_massage","foot_massage","beauty_spa","nails","manicure","pedicure","nail_art","creative_activity","food_exploration","shopping","quiet_time","surprises","fashion_gifts","cute_gifts","beauty_gifts","practical_gifts","sentimental_gifts"];
 
-const REACTIONS = ["okay miss main character 💅","weh valid","noted. respectfully 📝","bestie that's iconic","lowkey obsessed","girl math says yes","it's giving taste ✨","the lore deepens…"];
+const REACTIONS = ["okay miss main character 💅","weh valid","noted. respectfully 📝","mother is mothering","ate & left no crumbs","kamek approve 🤌","it's giving taste ✨","the lore deepens…","not me agreeing out loud","girl math says yes","the vibes are immaculate"];
+const MISS_LINES = ["the claw said \"not today bestie\" 😭","scammed by a toy machine. again.","skill issue? no. claw issue.","SO close. the claw has trust issues","it slipped… like my sleep schedule"];
 
 /* =========================================================
    STATE + HELPERS
    ========================================================= */
-const fresh = () => ({step:"welcome", swipes:{}, catch:null, foodMvp:null, dessertMvp:null, clawOrder:null, claw:[], cart:[], special:null, wish:"", completedAt:null, submitted:false, view:null});
+const fresh = () => ({step:"welcome", tot:{}, clawTries:0, catch:null, foodMvp:null, dessertMvp:null, clawOrder:null, claw:[], cart:[], special:null, wish:"", completedAt:null, submitted:false, view:null});
 let S = fresh();
 const save = () => { try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(S)); }catch(e){} };
-const load = () => { try{ const v = JSON.parse(localStorage.getItem(STORAGE_KEY)); if(v && v.swipes) return Object.assign(fresh(), v); }catch(e){} return null; };
+const load = () => { try{ const v = JSON.parse(localStorage.getItem(STORAGE_KEY)); if(v && v.tot) return Object.assign(fresh(), v); }catch(e){} return null; };
 const $ = s => document.querySelector(s);
 const wait = ms => new Promise(r => setTimeout(r, ms));
 const vib = ms => { try{ navigator.vibrate && navigator.vibrate(ms); }catch(e){} };
@@ -543,14 +565,14 @@ function burst(x, y, n=8, spread=70){
 /* =========================================================
    FLOW
    ========================================================= */
-const ROUNDS = {swipe:0, catch:1, mvpFood:1, mvpDessert:1, claw:2, shop:3, special:3, wish:3};
-const ROUND_NAMES = ["round 1 · swipe your dream day","round 2 · catch your cravings","round 3 · the gift claw","round 4 · dream-day shop"];
-const ORDER = ["intro:swipe","swipe","intro:catch","catch","mvpFood","mvpDessert","intro:claw","claw","intro:shop","shop","special","wish"];
+const ROUNDS = {tot:0, catch:1, mvpFood:1, mvpDessert:1, claw:2, shop:3, special:3, wish:3};
+const ROUND_NAMES = ["round 1 · this or that","round 2 · catch your cravings","round 3 · the gift claw","round 4 · dream-day shop"];
+const ORDER = ["intro:tot","tot","intro:catch","catch","mvpFood","mvpDessert","intro:claw","claw","intro:shop","shop","special","wish"];
 const INTROS = {
-  swipe:{e:"💘", r:"round 1 of 4", t:"swipe your dream day", btn:"let's swipe 💅", lines:["👉 swipe right = yes please","👈 swipe left = hard pass","👆 swipe up = OBSESSED 🤩","(or tap the buttons, no judgement)"]},
+  tot:{e:"⚖️", r:"round 1 of 4", t:"this or that", btn:"okay i'm ready (i'm not) 😭", lines:["two options. you pick ONE.","can't decide? you get 2 ♎ \"both\" passes (no reason. lol.)","neither? also valid 🙅‍♀️","22 options. no pressure. (pressure.)"]},
   catch:{e:"🧺", r:"round 2 of 4", t:"catch your cravings", btn:"i'm ready 🍓", lines:["👆 drag anywhere to move the basket","🍜🍰 catch the food = points","📧⏰ dodge the responsibilities","25 seconds. go feral."]},
-  claw:{e:"🕹️", r:"round 3 of 4", t:"the gift claw machine", btn:"insert coin 🪙", lines:["the claw swings by itself","tap DROP to grab a capsule","react honestly to every prize","7 tries · the machine is rigged in your favour 💕"]},
-  shop:{e:"🛒", r:"round 4 of 4", t:"the dream-day shop", btn:"go shopping 🛍️", lines:["you get 300 💗 to spend","build your perfect birthday","you can't afford everything (girl math has limits)","leftover hearts are totally fine"]}
+  claw:{e:"🕹️", r:"round 3 of 4", t:"the gift claw machine", btn:"insert coin 🪙", lines:["the claw swings by itself — tap DROP","aim right on top of a capsule 🎯","10 coins · 7 prizes inside","warning: this claw is a lil bit of a scammer 😭"]},
+  shop:{e:"🛒", r:"round 4 of 4", t:"the dream-day shop", btn:"go shopping 🛍️", lines:["you get 10 🎟️ tickets","spend them on your perfect birthday","you can't have everything (girl math has limits)","leftover tickets are totally fine"]}
 };
 
 function show(id){
@@ -568,7 +590,7 @@ function show(id){
 function go(step){
   S.step = step; save();
   if(step.startsWith("intro:")) return showIntro(step.slice(6));
-  ({swipe:startSwipe, catch:startCatch, mvpFood:pickFood, mvpDessert:pickDessert, claw:startClaw, shop:startShop, special:pickSpecial, wish:startWish})[step]();
+  ({tot:startTot, catch:startCatch, mvpFood:pickFood, mvpDessert:pickDessert, claw:startClaw, shop:startShop, special:pickSpecial, wish:startWish})[step]();
 }
 function next(){ const i = ORDER.indexOf(S.step); i < ORDER.length-1 ? go(ORDER[i+1]) : finish(); }
 
@@ -581,58 +603,41 @@ function showIntro(k){
 }
 
 /* =========================================================
-   ROUND 1 — SWIPE
+   ROUND 1 — THIS OR THAT
+   answers: "a" | "b" | "both" (libra pass) | "neither"
    ========================================================= */
-let queue = [], busy = false;
-function startSwipe(){ queue = SWIPES.filter(c => !S.swipes[c.id]); show("s-swipe"); renderDeck(); }
-
-function renderDeck(){
-  const deck = $("#deck"), done = SWIPES.length - queue.length;
-  $("#swipeCount").textContent = `${Math.min(done+1, SWIPES.length)} / ${SWIPES.length}`;
-  $("#undoBtn").disabled = done === 0;
-  deck.textContent = "";
-  if(!queue.length) return next();
-  queue.slice(0,2).reverse().forEach((c, i, arr) => {
-    const el = document.createElement("div");
-    el.className = "card " + (i === arr.length-1 ? "top" : "back");
-    el.innerHTML = `<span class="stamp st-yes">YES 💗</span><span class="stamp st-no">NOPE</span><span class="stamp st-sup">OBSESSED 🤩</span><div class="ph">${c.e}</div><h3>${c.t}</h3><p>${c.d}</p>`;
-    deck.appendChild(el);
-    if(el.classList.contains("top")) dragify(el);
-  });
+let busy = false;
+const totIdx = () => PAIRS.findIndex(p => !S.tot[p.id]);
+const passesUsed = () => Object.values(S.tot).filter(v => v==="both").length;
+function startTot(){ show("s-tot"); renderTot(); }
+function renderTot(){
+  const i = totIdx(); if(i < 0) return next();
+  const p = PAIRS[i], left = LIBRA_PASSES - passesUsed();
+  $("#totMeme").textContent = p.m;
+  $("#totCount").textContent = `${i+1} / ${PAIRS.length}`;
+  $("#totBack").disabled = i === 0;
+  const lb = $("#libraBtn"); lb.textContent = left ? `♎ both (${left} left)` : "♎ no passes left"; lb.disabled = !left;
+  const opt = (o,k) => `<button class="choice" data-k="${k}"><span class="e">${o.e}</span><b>${o.t}</b><small>${o.d}</small></button>`;
+  const box = $("#tot");
+  box.innerHTML = opt(p.a,"a") + `<span class="or" aria-hidden="true">or</span>` + opt(p.b,"b");
+  box.classList.remove("enter"); void box.offsetWidth; box.classList.add("enter");
 }
-
-function dragify(el){
-  let sx=0, sy=0, dx=0, dy=0, on=false, raf=0;
-  const yes=el.querySelector(".st-yes"), no=el.querySelector(".st-no"), sup=el.querySelector(".st-sup");
-  const cl = v => Math.max(0, Math.min(1, v));
-  const paint = () => { raf=0; el.style.transform=`translate(${dx}px,${dy}px) rotate(${dx/16}deg)`; yes.style.opacity=cl(dx/90); no.style.opacity=cl(-dx/90); sup.style.opacity=Math.abs(dx)<50?cl(-dy/110):0; };
-  el.addEventListener("pointerdown", e => { if(busy) return; on=true; sx=e.clientX; sy=e.clientY; dx=dy=0; el.setPointerCapture(e.pointerId); el.style.transition="none"; });
-  el.addEventListener("pointermove", e => { if(!on) return; dx=e.clientX-sx; dy=e.clientY-sy; if(!raf) raf=requestAnimationFrame(paint); });
-  const up = () => {
-    if(!on) return; on=false;
-    if(dx > 90) decide("yes"); else if(dx < -90) decide("no"); else if(dy < -110) decide("super");
-    else { el.style.transition="transform .3s cubic-bezier(.3,1.4,.5,1)"; dx=dy=0; paint(); }
-  };
-  el.addEventListener("pointerup", up); el.addEventListener("pointercancel", up);
+function answerTot(k, e){
+  const i = totIdx(); if(busy || i < 0) return;
+  if(k==="both" && passesUsed() >= LIBRA_PASSES) return;
+  busy = true; S.tot[PAIRS[i].id] = k; save(); vib(10);
+  document.querySelectorAll("#tot .choice").forEach(c => c.classList.add(k==="both" || c.dataset.k===k ? "picked" : "lost"));
+  if(k==="both") toast("libra behaviour detected ♎");
+  else if(k==="neither") toast("noted. the ick is valid 🙅‍♀️");
+  else if(Math.random() < .3) toast(REACTIONS[Math.random()*REACTIONS.length|0]);
+  if(k!=="neither") burst(e && e.clientX ? e.clientX : innerWidth/2, e && e.clientY ? e.clientY : innerHeight/2, k==="both"?12:7);
+  setTimeout(() => { busy = false; renderTot(); }, 430);
 }
-
-function decide(r){
-  if(busy || !queue.length) return; busy = true;
-  const c = queue[0], el = $("#deck .card.top");
-  S.swipes[c.id] = r; save(); vib(10);
-  const x = r==="yes" ? 1 : r==="no" ? -1 : 0;
-  el.querySelector(r==="yes"?".st-yes":r==="no"?".st-no":".st-sup").style.opacity = 1;
-  el.style.transition = "transform .32s ease-in, opacity .32s";
-  el.style.transform = r==="super" ? "translateY(-120%) rotate(-4deg)" : `translate(${x*130}%,24px) rotate(${x*22}deg)`;
-  el.style.opacity = 0;
-  if(r !== "no"){ const b=el.getBoundingClientRect(); burst(b.left+b.width/2, b.top+b.height/2, r==="super"?12:7); if(Math.random()<.35) toast(REACTIONS[Math.random()*REACTIONS.length|0]); }
-  setTimeout(() => { queue.shift(); busy=false; renderDeck(); }, 300);
-}
-function undo(){
+function totBack(){
   if(busy) return;
-  const done = SWIPES.filter(c => S.swipes[c.id]);
-  const last = done[done.length-1]; if(!last) return;
-  delete S.swipes[last.id]; save(); queue.unshift(last); renderDeck();
+  const i = totIdx(), j = (i < 0 ? PAIRS.length : i) - 1;
+  if(j < 0) return;
+  delete S.tot[PAIRS[j].id]; save(); renderTot();
 }
 
 /* =========================================================
@@ -759,7 +764,8 @@ function pickSpecial(){ renderPick({chapter:"the soft question 🫶", title:"Las
    ROUND 3 — CLAW (CSS-animated swing, DOM only)
    ========================================================= */
 let clawBusy=false, prizeNow=null;
-const TOTAL_GRABS = CLAW.length;
+const TOTAL_GRABS = CLAW.length;   // 7 prizes to win
+const coinsLeft = () => COINS - (S.clawTries||0);
 function startClaw(){
   if(!S.clawOrder){ S.clawOrder = shuffle(CLAW.map((_,i)=>i)); save(); }
   show("s-claw");
@@ -782,11 +788,13 @@ function startClaw(){
   updateGrabs();
 }
 function updateGrabs(){
-  const left=TOTAL_GRABS-S.claw.length;
-  $("#grabsLeft").textContent=left;
+  const won=S.claw.length;
+  $("#grabsLeft").textContent=coinsLeft();
+  $("#prizeCount").textContent=`${won}/${TOTAL_GRABS}`;
   const b=$("#dropBtn");
-  b.disabled=false; b.textContent = left ? "DROP 🎀" : "next round →";
+  b.disabled=false; b.textContent = won>=TOTAL_GRABS ? "next round →" : "DROP 🎀";
 }
+function resetClaw(){ const claw=$("#claw"); claw.style.transition=""; claw.style.transform=""; claw.style.animation=""; }
 async function drop(){
   if(clawBusy) return;
   if(S.claw.length >= TOTAL_GRABS) return next();
@@ -796,9 +804,13 @@ async function drop(){
   // freeze the swing where it is
   const x=new DOMMatrixReadOnly(getComputedStyle(claw).transform).m41;
   claw.style.animation="none"; claw.style.transform=`translateX(${x}px)`;
-  // aim-assist: snap to the nearest capsule (the machine is rigged in her favour)
+  // nearest capsule; claw drifts onto it but the grip depends on her aim
   let best=caps[0], bd=1e9;
   for(const c of caps){ const r=c.getBoundingClientRect(), d=Math.abs(r.left-gr.left+r.width/2-(x+28)); if(d<bd){bd=d; best=c;} }
+  // win rules: perfect aim = guaranteed · otherwise ~50/50 · mercy: never run out of coins before all 7 prizes
+  const need=TOTAL_GRABS-S.claw.length, perfect=bd<8;
+  const win = perfect || coinsLeft()<=need || Math.random()<.5;
+  S.clawTries=(S.clawTries||0)+1; save(); $("#grabsLeft").textContent=coinsLeft();
   const br=best.getBoundingClientRect();
   claw.style.transition="transform .22s ease"; claw.style.transform=`translateX(${br.left-gr.left+br.width/2-28}px)`;
   await wait(240);
@@ -806,7 +818,21 @@ async function drop(){
   rope.style.transform=`scaleY(${(40+dy)/40})`; grab.style.transform=`translateY(${dy}px)`;
   await wait(640);
   claw.classList.add("closed"); vib(10); await wait(200);
-  $("#held").style.setProperty("--c",best.dataset.c); best.remove(); claw.classList.add("holding");
+  $("#held").style.setProperty("--c",best.dataset.c); best.style.visibility="hidden"; claw.classList.add("holding");
+  if(!win){
+    // lift halfway… then it slips 😭
+    rope.style.transform=`scaleY(${(40+dy*.45)/40})`; grab.style.transform=`translateY(${dy*.45}px)`;
+    await wait(420);
+    claw.classList.remove("closed","holding");
+    best.style.visibility=""; best.classList.remove("back"); void best.offsetWidth; best.classList.add("back");
+    vib([25,40,25]); toast(MISS_LINES[Math.random()*MISS_LINES.length|0]);
+    rope.style.transform=""; grab.style.transform="";
+    await wait(620);
+    resetClaw(); clawBusy=false; updateGrabs();
+    return;
+  }
+  if(perfect) toast("perfect aim 🎯 the claw respects you");
+  best.remove();
   rope.style.transform=""; grab.style.transform="";
   await wait(640);
   claw.style.transition="transform .65s ease-in-out"; claw.style.transform="translateX(8px)";
@@ -829,8 +855,7 @@ async function react(r, e){
   S.claw.push({...prizeNow, r}); prizeNow=null; save();
   if(r!=="pass") burst(e.clientX||innerWidth/2, e.clientY||innerHeight/2, r==="love"?12:6);
   $("#modal").hidden=true; $("#chuteCap").classList.remove("fall");
-  const claw=$("#claw"); claw.style.transition=""; claw.style.transform=""; claw.style.animation="";
-  clawBusy=false; updateGrabs();
+  resetClaw(); clawBusy=false; updateGrabs();
 }
 
 /* =========================================================
@@ -842,7 +867,7 @@ function startShop(){
   SHOP.forEach(it=>{
     const b=document.createElement("button"); b.className="item"; b.dataset.id=it.id;
     b.setAttribute("aria-pressed", S.cart.includes(it.id));
-    b.innerHTML=`<span class="e">${it.e}</span><span class="n">${it.t}</span><span class="p">${it.p}💗</span>`;
+    b.innerHTML=`<span class="e">${it.e}</span><span class="n">${it.t}</span><span class="p">${it.p} 🎟️</span>`;
     b.onclick=()=>toggleItem(it,b); box.appendChild(b);
   });
   wallet(); show("s-shop");
@@ -850,13 +875,13 @@ function startShop(){
 function toggleItem(it, b){
   const i=S.cart.indexOf(it.id);
   if(i>=0) S.cart.splice(i,1);
-  else if(spent()+it.p > BUDGET){ b.classList.remove("nope"); void b.offsetWidth; b.classList.add("nope"); vib(30); toast("girl math says no 😭 over budget"); return; }
+  else if(spent()+it.p > BUDGET){ b.classList.remove("nope"); void b.offsetWidth; b.classList.add("nope"); vib(30); toast("not enough tickets 😭 girl math has limits"); return; }
   else { S.cart.push(it.id); vib(8); const r=b.getBoundingClientRect(); burst(r.left+r.width/2, r.top+r.height/2, 5, 50); }
   b.setAttribute("aria-pressed", S.cart.includes(it.id)); save(); wallet();
 }
 function wallet(){
   const left=BUDGET-spent();
-  $("#hearts").textContent=left+"💗"; $("#wfill").style.transform=`scaleX(${left/BUDGET})`;
+  $("#hearts").textContent=left+" 🎟️"; $("#wfill").style.transform=`scaleX(${left/BUDGET})`;
   $("#checkoutBtn").disabled=!S.cart.length;
 }
 
@@ -871,15 +896,22 @@ function startWish(){ $("#wishIn").value=S.wish||""; show("s-wish"); }
 function compute(){
   const sc=Object.fromEntries(SCORE_KEYS.map(k=>[k,0]));
   const add=(s,m=1)=>{ for(const k in s) sc[k]+=s[k]*m; };
-  const sw=S.swipes, flags=new Set();
+  const T=S.tot, chosen=new Set(), rejected=new Set();
 
-  // Round 1 — swipes
-  SWIPES.forEach(c=>{ const r=sw[c.id]; if(r==="yes") add(c.s); else if(r==="super") add(c.s,1.7); else if(r==="no") flags.add(c.id); });
+  // Round 1 — this or that (a pick = full score; "both" = 0.75 each; "neither" = explicit no on both)
+  PAIRS.forEach(p=>{
+    const r=T[p.id];
+    if(r==="a"){ add(p.a.s); chosen.add(p.a.id); }
+    else if(r==="b"){ add(p.b.s); chosen.add(p.b.id); }
+    else if(r==="both"){ add(p.a.s,.75); add(p.b.s,.75); chosen.add(p.a.id); chosen.add(p.b.id); }
+    else if(r==="neither"){ rejected.add(p.a.id); rejected.add(p.b.id); }
+  });
+  const OPTS=PAIRS.flatMap(p=>[p.a,p.b]);
   // Round 4 — shop (explicit spending = strongest signal)
   const cart=S.cart.map(id=>SHOP.find(s=>s.id===id)).filter(Boolean), spentBy={};
-  cart.forEach(it=>{ spentBy[it.act]=(spentBy[it.act]||0)+it.p; if(ACTS[it.act]) sc[it.act]+=6; if(it.s) add(it.s); });
+  cart.forEach(it=>{ spentBy[it.act]=(spentBy[it.act]||0)+it.p; if(ACTS[it.act]) sc[it.act]+=5+it.p; if(it.s) add(it.s); });
   // Round 3 — claw reactions
-  S.claw.forEach(g=>{ if(g.r==="love") sc[g.cat]+=4; else if(g.r==="cute") sc[g.cat]+=2; });
+  S.claw.forEach(g=>{ if(g.r==="love"){ sc[g.cat]+=4; if(g.cat!=="sentimental_gifts") sc.shopping+=.5; } else if(g.r==="cute") sc[g.cat]+=2; });
   // soft question
   const sp=SPECIAL.find(o=>o.id===S.special); if(sp) add(sp.s);
   for(const k in sc) sc[k]=Math.round(sc[k]*10)/10;
@@ -887,12 +919,12 @@ function compute(){
   // confidence per activity
   const status={};
   Object.keys(ACTS).forEach(a=>{
-    const ids=ACT_CARDS[a], allNo=ids.every(id=>sw[id]==="no"), sup=ids.some(id=>sw[id]==="super"), bought=spentBy[a]||0;
+    const ids=OPTS.filter(o=>(o.act||[]).includes(a)).map(o=>o.id);
+    const allNo=ids.length && ids.every(id=>rejected.has(id)), bought=spentBy[a]||0;
     let tier, txt;
-    if(bought && allNo){ tier="mixed"; txt="MIXED — swiped no, but bought it in the shop"; }
-    else if(bought){ tier="confirmed"; txt=`CONFIRMED — she spent ${bought}💗 on it`; }
-    else if(sup){ tier="confirmed"; txt="CONFIRMED — she super-liked it 🤩"; }
-    else if(allNo){ tier="no"; txt="NOT INTERESTED — she swiped no on all of it"; }
+    if(bought && allNo){ tier="mixed"; txt="MIXED — said neither, but bought it in the shop"; }
+    else if(bought){ tier="confirmed"; txt=`CONFIRMED — she spent ${bought} of ${BUDGET} 🎟️ on it`; }
+    else if(allNo){ tier="no"; txt="NOT INTERESTED — she said \"neither\" every time"; }
     else if(sc[a]>=6){ tier="likely"; txt="LIKELY — strong inferred interest"; }
     else if(sc[a]>=3){ tier="possible"; txt="POSSIBLY INTERESTED"; }
     else if(sc[a]>0){ tier="weak"; txt="WEAK SIGNAL — not a dislike"; }
@@ -901,35 +933,33 @@ function compute(){
   });
   const order=Object.keys(ACTS);
   const rank=order.slice().sort((x,y)=>{
-    const v=a=>status[a].tier==="no"?-100:sc[a]+(status[a].spent/20);
+    const v=a=>status[a].tier==="no"?-100:sc[a];
     return v(y)-v(x) || order.indexOf(x)-order.indexOf(y);
   });
 
   // massage + nails detail
-  const icon={super:"🤩",yes:"💗",no:"✕"};
-  const group=(ids)=>ids.map(id=>{ const c=SWIPES.find(s=>s.id===id); return `${icon[sw[id]]||"–"} ${c.t}`; }).join(" · ");
   const pickBest=(keys)=>{ const k=keys.slice().sort((a,b)=>sc[b]-sc[a])[0]; return sc[k]>0?k:null; };
-  const massagePref = status.massage.tier==="no" ? "not_interested" : (pickBest(["body_massage","foot_massage","beauty_spa"]) || "no_signal");
+  const massagePref = status.massage.tier==="no" ? "not_interested" : rejected.has("body")&&rejected.has("foot") ? (chosen.has("headspa")?"beauty_spa":"neither_body_nor_foot") : (pickBest(["body_massage","foot_massage","beauty_spa"]) || "no_signal");
   const nailPref = status.nails.tier==="no" ? "not_interested" : (pickBest(["manicure","pedicure","nail_art"]) || "no_signal");
 
   // gifts
   const giftRank=Object.keys(GIFTS).sort((a,b)=>sc[b]-sc[a]).filter(k=>sc[k]>0);
   // surprise tolerance
-  const m=sw.mystery, pub=sw.public;
-  const surprise = m==="super"?"loves_surprises": m==="yes"?"likes_surprises": m==="no"?"prefers_knowing_the_plan":"unknown";
+  const surprise = ({a:"loves_surprises", b:"prefers_knowing_the_plan", both:"either_is_fine", neither:"prefers_deciding_together"})[T.plan]||"unknown";
+  const pub = ({a:"keep_it_private", b:"ok_with_public", both:"either_is_fine"})[T.moment]||"unknown";
   // vibe
-  const vibeRank=[["cozy","cafe"],["fancy","fancy"],["cute & playful","photo"]].map(([v,id])=>[v,({super:3,yes:2,no:-1})[sw[id]]||0]).sort((a,b)=>b[1]-a[1]);
+  const vibe=[({a:"cozy & quiet", b:"playful", both:"cozy + playful"})[T.battery], ({a:"fancy", b:"comfy", both:"fancy or comfy"})[T.dinner]].filter(Boolean).join(", ")||"unknown";
 
   const r = {
     top_activity:rank[0], second_activity:rank[1], activity_ranking:rank, activity_status:status,
     preferred_massage:massagePref, nail_preference:nailPref,
     food_preference:S.foodMvp, dessert_preference:S.dessertMvp, catch_game:S.catch,
     gift_categories:giftRank.slice(0,2), claw_prizes:S.claw.map(g=>({prize:g.t, category:g.sub, reaction:g.r})),
-    surprise_preference:surprise, public_surprise:pub||"unknown", vibe:vibeRank[0][1]>0?vibeRank[0][0]:"unknown",
-    appreciation:S.special, avoid:[...flags].map(id=>SWIPES.find(s=>s.id===id).t),
-    dream_day_cart:cart.map(i=>({item:i.t, hearts:i.p})), hearts_spent:spent(), spent_by_activity:spentBy,
-    optional_wish:(S.wish||"").trim(), scores:sc, swipes:sw,
-    _detail:{massage:group(ACT_CARDS.massage), nails:group(ACT_CARDS.nails), creative:group(["pottery","batik","photo"])}
+    surprise_preference:surprise, public_surprise:pub, vibe,
+    appreciation:S.special, avoid:[...rejected].map(id=>OPTS.find(o=>o.id===id).t),
+    dream_day_cart:cart.map(i=>({item:i.t, tickets:i.p})), tickets_spent:spent(), spent_by_activity:spentBy,
+    claw_coins_used:S.clawTries, optional_wish:(S.wish||"").trim(), scores:sc,
+    this_or_that:PAIRS.map(p=>({pair:`${p.a.t} vs ${p.b.t}`, answer:({a:p.a.t, b:p.b.t, both:"BOTH (libra pass)", neither:"NEITHER"})[T[p.id]]||"—"}))
   };
   r.archetype=archetype(r);
   return r;
@@ -960,27 +990,27 @@ function summary(r){
   L.push(`TOP EXPERIENCE: ${A(r.top_activity)}  [${st[r.top_activity].txt}]`);
   L.push(`SECONDARY EXPERIENCE: ${A(r.second_activity)}  [${st[r.second_activity].txt}]`);
   L.push("");
-  L.push(`HER DREAM-DAY CART (${r.hearts_spent}/${BUDGET}💗 — hearts were priced roughly like KL ringgit):`);
-  r.dream_day_cart.forEach(i=>L.push(`  • ${i.item} — ${i.hearts}💗`));
-  if(r.hearts_spent){
+  L.push(`HER DREAM-DAY CART (${r.tickets_spent}/${BUDGET} 🎟️ — 1 ticket ≈ RM30 at real KL prices):`);
+  r.dream_day_cart.forEach(i=>L.push(`  • ${i.item} — ${i.tickets} 🎟️ (~RM${i.tickets*30})`));
+  if(r.tickets_spent){
     L.push("  → her split applied to your RM300:");
-    Object.entries(r.spent_by_activity).sort((a,b)=>b[1]-a[1]).forEach(([a,h])=>L.push(`     ${a==="gift"?"Gift":A(a)}: ~RM${Math.round(h/r.hearts_spent*300/5)*5}`));
+    Object.entries(r.spent_by_activity).sort((a,b)=>b[1]-a[1]).forEach(([a,h])=>L.push(`     ${a==="gift"?"Gift":A(a)}: ~RM${Math.round(h/r.tickets_spent*300/5)*5}`));
   }
   L.push("");
-  L.push(`MASSAGE: ${r.preferred_massage.replace(/_/g," ")}  ← ${r._detail.massage}`);
-  L.push(`NAILS: ${r.nail_preference.replace(/_/g," ")}  ← ${r._detail.nails}`);
-  L.push(`CREATIVE: ${r._detail.creative}`);
+  L.push("THIS OR THAT (her exact picks):");
+  r.this_or_that.forEach(x=>L.push(`  ${x.pair}  →  ${x.answer}`));
   L.push("");
+  L.push(`MASSAGE TYPE: ${r.preferred_massage.replace(/_/g," ")}   NAILS: ${r.nail_preference.replace(/_/g," ")}`);
   L.push(`FOOD: ${FOODS[r.food_preference]?.[1]||"—"}   DESSERT: ${DESSERTS[r.dessert_preference]?.[1]||"—"}`);
-  L.push(`DATE VIBE: ${r.vibe}${S.swipes.fancy==="no"?"  (⚠ she passed on fancy dress-up dinners)":""}`);
+  L.push(`DATE VIBE: ${r.vibe}`);
   L.push("");
   L.push(`GIFT DIRECTION: ${r.gift_categories.map(g=>GIFTS[g]).join("  →  backup: ")||"no clear signal"}`);
   L.push("  claw machine reactions:");
   r.claw_prizes.forEach(p=>L.push(`   ${rx[p.reaction]} — ${p.prize} (${p.category})`));
   L.push("");
-  const sur={loves_surprises:"HIGH — super-liked a full mystery plan", likes_surprises:"MEDIUM-HIGH — likes a mystery plan", prefers_knowing_the_plan:"LOW — swiped no on a mystery plan; share the rough plan, keep the gift as the surprise", unknown:"unknown"}[r.surprise_preference];
+  const sur={loves_surprises:"HIGH — picked \"say less, surprise me\"", either_is_fine:"MEDIUM-HIGH — used a libra pass: surprise is fine, a hint is fine too", prefers_knowing_the_plan:"MEDIUM-LOW — wants the rough plan; keep the gift + small details as the surprise", prefers_deciding_together:"LOW — said neither; plan WITH her, keep only the gift a surprise", unknown:"unknown"}[r.surprise_preference];
   L.push(`SURPRISE TOLERANCE: ${sur}`);
-  L.push(`PUBLIC SURPRISE (restaurant singing): ${r.public_surprise==="no"?"⚠ NO — keep it private":r.public_surprise==="super"?"loves it 🤩":r.public_surprise==="yes"?"okay with it":"unknown"}`);
+  L.push(`PUBLIC SURPRISE (restaurant singing): ${r.public_surprise==="keep_it_private"?"⚠ keep it private":r.public_surprise==="ok_with_public"?"she picked the spotlight 📣":r.public_surprise==="either_is_fine"?"either is fine":"unknown"}`);
   L.push(`FEELS APPRECIATED BY: ${SPECIAL.find(o=>o.id===r.appreciation)?.t||"—"}`);
   L.push("");
   L.push("ACTIVITY STATUS (score · confidence):");
@@ -988,26 +1018,26 @@ function summary(r){
   const rm=Object.keys(ACTS).filter(a=>st[a].tier==="no"), low=Object.keys(ACTS).filter(a=>["weak","unknown"].includes(st[a].tier));
   L.push(`SAFE TO REMOVE (explicit no): ${rm.length?rm.map(A).join("; "):"nothing — she didn't reject a whole activity"}`);
   L.push(`LOW PRIORITY (don't assume she dislikes): ${low.length?low.map(A).join("; "):"none"}`);
-  L.push(`SPECIFIC THINGS SHE SWIPED NO ON: ${r.avoid.join("; ")||"none"}`);
+  L.push(`SPECIFIC THINGS SHE SAID "NEITHER" TO: ${r.avoid.join("; ")||"none"}`);
+  L.push(`CLAW: won 7 prizes using ${r.claw_coins_used}/${COINS} coins`);
   L.push("");
   L.push(`HER WISH: ${r.optional_wish?`“${r.optional_wish}”`:"(skipped)"}`);
   L.push(`Result card she saw: ${r.archetype.t.join(" ")} ${r.archetype.e}`);
   return L.join("\n");
 }
 function payload(r){
-  const now=new Date(), clean={...r}; delete clean._detail;
-  const sw=SWIPES.map(c=>`${({super:"🤩 OBSESSED",yes:"💗 yes",no:"✕ no"})[S.swipes[c.id]]||"–"}  ${c.t}`).join("\n");
+  const now=new Date(), clean={...r};
   return {
     _subject:"🎀 girlhood archives — new answers just landed",
     "1. PLANNING SUMMARY":summary(r),
-    "2. Her swipes (round 1)":sw,
+    "2. This or that (round 1)":r.this_or_that.map(x=>`${x.pair} → ${x.answer}`).join("\n"),
     "3. Her fairy wish":r.optional_wish||"(skipped)",
     "Top activity":ACTS[r.top_activity].label, "Second activity":ACTS[r.second_activity].label,
     "Preferred massage":r.preferred_massage, "Nail preference":r.nail_preference,
     "Food preference":FOODS[r.food_preference]?.[1]||"—", "Dessert preference":DESSERTS[r.dessert_preference]?.[1]||"—",
     "Gift categories":r.gift_categories.map(g=>GIFTS[g]).join(" | ")||"—",
     "Strong dislikes":r.avoid.join("; ")||"none", "Surprise preference":r.surprise_preference,
-    "Dream-day cart":r.dream_day_cart.map(i=>`${i.item} (${i.hearts}💗)`).join(", ")||"—",
+    "Dream-day cart":r.dream_day_cart.map(i=>`${i.item} (${i.tickets} 🎟️)`).join(", ")||"—",
     "Catch game score":r.catch_game?r.catch_game.score:"—",
     "Result shown to her":r.archetype.t.join(" ")+" "+r.archetype.e,
     "4. Category scores":Object.entries(r.scores).map(([k,v])=>`${k}: ${v}`).join("\n"),
@@ -1049,7 +1079,6 @@ function result(sent){
   const a=S.view||compute().archetype;
   $("#rEmo").textContent=a.e; $("#rTitle").innerHTML=`${esc(a.t[0])} <em>${esc(a.t[1])}</em>`;
   $("#rDesc").textContent=a.d; $("#rTraits").innerHTML=a.tr.map(t=>`<li>${esc(t)}</li>`).join(""); $("#rCompl").textContent=a.c;
-  $("#rDate").textContent=new Date(S.completedAt||Date.now()).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}).toLowerCase();
   $("#arch").innerHTML = sent ? "your lore has officially been <em>archived</em> 💌" : "your results are <em>ready</em> ✨";
   $("#outro").textContent = sent ? "someone's about to understand your princess preferences a little better 👀" : "one tiny step left — send your answers so the archive can do its thing 💌";
   $("#pending").classList.toggle("show", !sent);
@@ -1068,10 +1097,11 @@ function boot(){
   const saved=load(); if(saved) S=saved;
 
   // one-time event bindings
-  $("#startBtn").onclick=()=>{ if(S.step==="welcome") go("intro:swipe"); else go(S.step==="catch"?"intro:catch":S.step); };
-  $("#freshBtn").onclick=()=>{ S=fresh(); save(); go("intro:swipe"); };
+  $("#startBtn").onclick=()=>{ if(S.step==="welcome") go("intro:tot"); else go(S.step==="catch"?"intro:catch":S.step); };
+  $("#freshBtn").onclick=()=>{ S=fresh(); save(); go("intro:tot"); };
   $("#introGo").onclick=next;
-  $("#yesBtn").onclick=()=>decide("yes"); $("#noBtn").onclick=()=>decide("no"); $("#supBtn").onclick=()=>decide("super"); $("#undoBtn").onclick=undo;
+  $("#tot").addEventListener("click",e=>{ const c=e.target.closest(".choice"); if(c) answerTot(c.dataset.k,e); });
+  $("#libraBtn").onclick=e=>answerTot("both",e); $("#neitherBtn").onclick=e=>answerTot("neither",e); $("#totBack").onclick=totBack;
   const stage=$("#stage"); stage.addEventListener("pointerdown",e=>{ G.rect=stage.getBoundingClientRect(); aim(e); }); stage.addEventListener("pointermove",aim);
   $("#dropBtn").onclick=drop;
   $("#modal").addEventListener("click",e=>{ const b=e.target.closest("[data-r]"); if(b) react(b.dataset.r,e); });
